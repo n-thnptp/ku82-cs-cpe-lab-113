@@ -1,3 +1,16 @@
+// กำหนดพิกัด x และ y (เป็นข้อมูลชนิด int) ให้นิสิตเขียนโปรแกรมสำหรับตรวจสอบว่าพิกัด (x, y) อยู่ในทิศใด
+// (North, South, East, West, North-east, North-west, South-east, South-west, Center) ดังตัวอย่างด้านล่าง
+
+// ตัวอย่างผลลัพธ์ 1
+// Enter the x coordinate: -5
+// Enter the y coordinate: 0
+// West
+
+// ตัวอย่างผลลัพธ์ 2
+// Enter the x coordinate: 0
+// Enter the y coordinate: 0
+// Center
+
 #include <stdio.h>
 #include <stdlib.h>
 
