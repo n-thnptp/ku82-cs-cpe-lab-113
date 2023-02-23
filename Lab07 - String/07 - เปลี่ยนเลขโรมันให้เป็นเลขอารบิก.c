@@ -1,10 +1,15 @@
-#include <stdio.h>
-
 /*
-    loop through the input, if found either I, V, X (caps) then
-    change the flag for slicing to 1, if the next character is not I, V, or X then change the flag back to 0
-    convert the sliced string (romanian number) then put it to output[]
+เปลี่ยนเลขโรมันให้เป็นเลขอารบิก
+จงเขียนฟังก์ชันเพื่อเปลี่ยนเลขโรมันที่มีค่าอยู่ในช่วงเพียง 1 ถึง 9 (ซึ่งก็คือ I,II,III,IV,V,VI,VII,VIII,IX ตามลำดับ) ทั้งหมดที่ปรากฏในสตริงที่รับผ่านฟังก์ชันเข้ามา ให้กลายเป็นเลขอารบิก 1 หลัก แล้วบันทึกผลที่ได้ลงในตัวแปรอีกตัวที่ถูกส่งเข้ามาด้วยในฟังก์ชัน
+
+ตัวอย่างผลลัพธ์
+     Input: There are III eggs on the table.
+    Output: There are 3 eggs on the table.
+     Input: II + III = V
+    Output: 2 + 3 = 5
 */
+
+#include <stdio.h>
 void roman2arabic(char input[], char output[]) {
 
     int convertToInt(char c) {
@@ -18,7 +23,7 @@ void roman2arabic(char input[], char output[]) {
           default:
               return 0;
         }
-    }
+    };
 
     int i= 0, total = 0;
     int current, next, length;
