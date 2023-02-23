@@ -6,65 +6,58 @@
     convert the sliced string (romanian number) then put it to output[]
 */
 void roman2arabic(char input[], char output[]) {
-    int i = 0, j, romanFlag = 0, count, addIndex, start;
-    int convertedNum = 0, isInFront = 0;
-    char sliceStr[5];
 
-    while (input[i]) {
-        if (input[i] == 'I' || input[i] == 'V' || input[i] == 'X') {
-            romanFlag = 1;
-        } else {
-            output[i] = input[i];
+    int convertToInt(char c) {
+        switch(c) {
+          case 'I':
+              return 1;
+          case 'V':
+              return 5;
+          case 'X':
+              return 10;
+          default:
+              return 0;
         }
-
-        if (romanFlag == 1) {
-            addIndex = 0;
-            count = 0;
-            
-            // count roman numeric length
-            j = i;
-            while (input[j]) {
-                if (input[j] == 'I' || input[j] == 'V' || input[j] == 'X') {
-                    count++;
-                } else if (input[j+1] != 'I' || input[j+1] != 'V' || input[j+1] != 'X') {
-                    break;
-                }
-                j++;
-            }
-
-            // string slicing
-            addIndex = 0;
-            for (start = i; start <= i+count-1; start++) {
-                sliceStr[addIndex] = input[start];
-                addIndex++;
-            }
-            sliceStr[addIndex] = '\0';
-
-            // convert sliced string to arabic number (fix this)
-            if (sliceStr == "I") {
-                convertedNum = 1;
-            } else if (sliceStr == "II") {
-                convertedNum = 2;
-            } else if (sliceStr == "III") {
-                convertedNum = 3;
-            } else if (sliceStr == "IV") {
-                convertedNum = 4;
-            } else if (sliceStr == "V") {
-                convertedNum = 5;
-            } else if (sliceStr == "VI") {
-                convertedNum = 6;
-            } else if (sliceStr == "VII") {
-                convertedNum = 7;
-            } else if (sliceStr == "VIII") {
-                convertedNum = 8;
-            } else if (sliceStr == "IX") {
-                convertedNum = 9;
-            }
-
-            // send it to output? declare new output index?
-        }
-        i++;
     }
+
+    int i= 0, total = 0;
+    int current, next, length;
+    char *str = input;
+    char buffer[80];
+
+    while (*str != '\0') {
+        // checks if current string is I, V, or X
+        // then convert the roman number to integer and put it to total
+        if (*str == 'I' || *str == 'V' || *str == 'X') {
+            current = convertToInt(*str);
+            next = convertToInt(*(str + 1));
+            if (current < next) {
+                total -= current;
+            } else {
+                total += current;
+            }
+            
+        } else if (total != 0) {
+            length = sprintf(buffer, "%d", total);
+            for (int j = 0; j < length; j++) {
+                output[i++] = buffer[j];
+            }
+
+            output[i++] = *str;
+            total = 0;
+        } else {
+            output[i++] = *str;
+        }
+        str++;
+    }
+
+    if (total != 0) {
+        length = sprintf(buffer, "%d", total);
+        for (int j = 0; j < length; j++) {
+            output[i++] = buffer[j];
+        }
+    }
+    output[i] = '\0';           /* end */
 }
 
 int main() {
