@@ -38,54 +38,59 @@ typedef struct Node {
     int num;
     struct Node *next;
 } Node;
+typedef Node* NodePtr;
 
-void insert_node(int num, Node **head) {
-    Node *new_node = (Node*) malloc(sizeof(Node));
-    new_node->num = num;
-    new_node->next = NULL;
-
-    if(*head == NULL || (*head)->num > num) {
-        new_node->next = *head;
-        *head = new_node;
-    } else {
-        Node *curr = *head;
-        while(curr->next != NULL && curr->next->num < num) {
-            curr = curr->next;
-        }
-        new_node->next = curr->next;
-        curr->next = new_node;
-    }
-}
-
-void delete_node(int num, Node **head){
-    Node *curr;
-    Node *temp;
-    while ( (*head) && (*head)->num == num)
-        *head = (*head)->next;
-  
-    curr = *head;
-    Node *prev = NULL;
-    while (curr != NULL) {
-        if (curr->num == num) {
-            prev->next = curr->next;
-        } else {
-            prev = curr;
-        }
-        curr = curr->next;
-    }
-}
-
-void print_list(Node *head) {
+void print_list(NodePtr start) {
+    NodePtr current = start;
     printf("[ ");
-    while (head != NULL) {
-        printf("%d ", head->num);
-        head = head->next;
+    while (current != NULL) {
+        printf("%d ", current->num);
+        current = current->next;
     }
     printf("]\n");
 }
 
+void insert_node(NodePtr* startPtr, int num) {
+    NodePtr temp = (NodePtr) malloc(sizeof(Node));
+    temp->num = num;
+    temp->next = NULL;
+
+    if (*startPtr == NULL || (*startPtr)->num > num) {
+        temp->next = *startPtr;
+        *startPtr = temp;
+    } else {
+        Node *current = *startPtr;
+        
+        while ( current->next != NULL && current->next->num < num) {
+            current = current->next;
+        }
+        temp->next = current->next;
+        current->next = temp;
+    }
+}
+
+void delete_node(NodePtr* startPtr, int num) {
+    if (startPtr != NULL) {
+        while (*startPtr && (*startPtr)->num == num)
+            *startPtr = (*startPtr)->next;
+
+        NodePtr current = *startPtr;
+        NodePtr previous = NULL;
+
+        while (current != NULL) {
+            if (current->num == num) {
+                previous->next = current->next;
+            } else {
+                previous = current;
+            }
+            current = current->next;
+        }
+    }
+}
+
+
 int main() {
-    Node *data = NULL;
+    Node *startPtr = NULL;
     char command = ' ';
     int num = 0;
   
@@ -95,16 +100,16 @@ int main() {
     
         if(command == 'i'){
             scanf("%d", &num);
-            insert_node(num, &data);
+            insert_node(&startPtr, num);
         }
 
         if(command == 'd'){
             scanf("%d", &num);
-            delete_node(num, &data);
+            delete_node(&startPtr, num);
         }
 
         if(command == 'p'){
-            print_list(data);
+            print_list(startPtr);
         }
     }
 }

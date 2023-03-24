@@ -151,24 +151,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SIZE  97
+#define SIZE 97
 
 typedef struct nodeType {
-    int   item;
+    int item;
     struct nodeType* next;
 } Node;
 
-void insert_table(int value, Node** table) {
-    Node* temp = (Node *)malloc(sizeof(Node));
-    int index = value % SIZE;
-    temp->item = value;
-    temp->next = table[index];
-    table[index] = temp;
-}
+typedef Node* NodePtr;
 
-void print_table(int size, Node** table) {
+void print_table(int size, NodePtr* table) {
     for (int i = 0; i < size; i++) {
-        Node* curr = table[i];
+        NodePtr curr = table[i];
         printf("KEY %2d: ", i);
         while (curr != NULL) {
             printf("%d ", curr->item);
@@ -178,8 +172,16 @@ void print_table(int size, Node** table) {
     }
 }
 
+void insert_table(int value, NodePtr* table) {
+    NodePtr temp = (NodePtr)malloc(sizeof(Node));
+    int key_index = value % SIZE;
+    temp->item = value;
+    temp->next = table[key_index];
+    table[key_index] = temp;
+}
+
 int main() {
-    Node* table[SIZE] = {NULL};
+    NodePtr table[SIZE] = {NULL};
     char command = ' ';
     int num = 0;
 

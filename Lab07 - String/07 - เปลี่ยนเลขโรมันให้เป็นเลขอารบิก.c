@@ -25,7 +25,7 @@ void roman2arabic(char input[], char output[]) {
         }
     };
 
-    int i= 0, total = 0;
+    int i = 0, total = 0;
     int current, next, length;
     char *str = input;
     char buffer[80];
